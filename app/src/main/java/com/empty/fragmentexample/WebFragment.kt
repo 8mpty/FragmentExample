@@ -29,9 +29,7 @@ class WebFragment : Fragment() {
         webView.settings.javaScriptEnabled = true
 
         // Load a web page example
-        webView.loadUrl("https://www.example.com/")
-
-        // Notify the MainActivity to replace this fragment with another fragment if needed
-        (activity as? MainActivity)?.onWebFragmentLoaded()
+        webView.loadUrl("https://m.youtube.com/")
+        webView.setWebViewClient(WebViewClient())
     }
 }

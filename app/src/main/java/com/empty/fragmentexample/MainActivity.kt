@@ -62,9 +62,6 @@ class MainActivity : AppCompatActivity() {
         fragTransaction.replace(R.id.mainView, frag)
         fragTransaction.commit()
     }
-    fun onWebFragmentLoaded() {
-        replaceFragment(HomeFragment())
-    }
     private fun loadDefaults(){
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(baseContext)
 
