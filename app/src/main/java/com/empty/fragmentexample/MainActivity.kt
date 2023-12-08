@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.empty.fragmentexample.Settings.SettingsActivity
 import com.empty.fragmentexample.Settings.SettingsFragment
 import com.empty.fragmentexample.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.custom_toolbar.toolbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,9 +22,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(toolbar)
 
         loadDefaults()
-
 
         binding.btmNavBar.setOnItemSelectedListener {
             if(it.itemId == R.id.nav_home){
@@ -46,36 +48,44 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.settings -> {
-                val intent = Intent(this, SettingsActivity::class.java)
-                startActivity(intent)
-                return true
+                Intent(this, SettingsActivity::class.java).apply {
+                    startActivity(this)
+                }
+                true
             }
-            else -> return super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun replaceFragment(frag: Fragment){
         val fragManager = supportFragmentManager
-        val fragTransaction = fragManager.beginTransaction()
-        fragTransaction.replace(R.id.mainView, frag)
-        fragTransaction.commit()
+        fragManager.beginTransaction().apply {
+            replace(R.id.mainView, frag)
+            commit()
+        }
     }
     private fun loadDefaults(){
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(baseContext)
-
         val default_screen = sharedPref.getString("default_main","")
 
-        if(default_screen == "home"){
-            binding.btmNavBar.selectedItemId = R.id.nav_home
-            replaceFragment(HomeFragment())
-        }else if(default_screen == "accounts"){
-            binding.btmNavBar.selectedItemId = R.id.nav_acc
-            replaceFragment(AccountFragment())
-        }else if(default_screen == "info"){
-            binding.btmNavBar.selectedItemId = R.id.nav_info
-            replaceFragment(InfoFragment())
+        when(default_screen){
+            "home" -> {
+                binding.btmNavBar.selectedItemId = R.id.nav_home
+                replaceFragment(HomeFragment())
+            }
+            "accounts" -> {
+                binding.btmNavBar.selectedItemId = R.id.nav_acc
+                replaceFragment(AccountFragment())
+            }
+            "info" -> {
+                binding.btmNavBar.selectedItemId = R.id.nav_info
+                replaceFragment(InfoFragment())
+            }else -> {
+                binding.btmNavBar.selectedItemId = R.id.nav_home
+                replaceFragment(HomeFragment())
+            }
         }
     }
 }
