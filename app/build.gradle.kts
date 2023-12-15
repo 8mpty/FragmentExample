@@ -54,6 +54,11 @@ dependencies {
     // Custom Added
     implementation ("androidx.core:core-splashscreen:1.1.0-alpha02")
 
+    // GeckoView
+    val gvChannel = "nightly"
+    val gvVersion = "122.0.20231213182430"
+    implementation("org.mozilla.geckoview:geckoview-${gvChannel}:${gvVersion}")
+
     // Test
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

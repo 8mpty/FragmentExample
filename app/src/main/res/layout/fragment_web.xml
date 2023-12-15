@@ -7,12 +7,15 @@
     tools:context=".WebFragment">
 
     <RelativeLayout
+        android:id="@+id/weblay"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <WebView
+        <org.mozilla.geckoview.GeckoView
             android:id="@+id/webview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
     </RelativeLayout>
 
 </FrameLayout>
