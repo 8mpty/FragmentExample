@@ -7,11 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include layout="@layout/custom_toolbar"/>
+    <LinearLayout
+        android:id="@+id/toolbarLay"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/custom_toolbar"/>
+    </LinearLayout>
 
     <View
         android:id="@+id/space"
-        android:layout_below="@+id/appBarLayout"
+        android:layout_below="@+id/toolbarLay"
         android:layout_width="match_parent"
         android:background="@color/white"
         android:layout_height="1dp"/>

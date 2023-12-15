@@ -7,5 +7,10 @@
         android:id="@+id/settings"
         android:title="@string/settings"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/hd_toolbar"
+        android:title="@string/hide_toolbar"
+        app:showAsAction="never"/>
+
 
 </menu>
