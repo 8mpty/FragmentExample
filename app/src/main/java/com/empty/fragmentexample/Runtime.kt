@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import org.mozilla.geckoview.GeckoRuntime
 
-class GeckoRuntime : Application() {
+class Runtime : Application() {
     companion object {
         private lateinit var geckoRuntime: GeckoRuntime
         fun getGeckoRuntime(context: Context): GeckoRuntime {

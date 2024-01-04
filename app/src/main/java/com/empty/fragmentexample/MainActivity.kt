@@ -3,51 +3,52 @@ package com.empty.fragmentexample
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import com.empty.fragmentexample.Fragments.AccountFragment
+import com.empty.fragmentexample.Fragments.HomeFragment
+import com.empty.fragmentexample.Fragments.InfoFragment
 import com.empty.fragmentexample.Settings.SettingsActivity
-import com.empty.fragmentexample.Settings.SettingsFragment
 import com.empty.fragmentexample.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.activity_main.mainView
 import kotlinx.android.synthetic.main.activity_main.toolbarLay
 import kotlinx.android.synthetic.main.custom_toolbar.toolbar
-import kotlinx.android.synthetic.main.fragment_web.view.webview
-import kotlinx.android.synthetic.main.fragment_web.webview
 
 class MainActivity : AppCompatActivity() {
 
+    private val viewModel : SplashViewModel by viewModels()
     private lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        installSplashScreen().apply {
+            setKeepOnScreenCondition{
+                viewModel.isLoading.value
+            }
+        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(toolbar)
-
-        Thread.sleep(1)
-        installSplashScreen()
         loadDefaults()
 
-        binding.btmNavBar.setOnItemSelectedListener {
-            if(it.itemId == R.id.nav_home){
-                replaceFragment(HomeFragment())
+        binding.btmNavBar.setOnItemSelectedListener { menuItem ->
+            val selectedFragment = when (menuItem.itemId) {
+                R.id.nav_home -> HomeFragment()
+                R.id.nav_acc -> AccountFragment()
+                R.id.nav_info -> InfoFragment()
+                R.id.nav_web -> WebFragment()
+                else -> return@setOnItemSelectedListener false
             }
-            if(it.itemId == R.id.nav_acc){
-                replaceFragment(AccountFragment())
+
+            // Check if the selected fragment is different from the current fragment
+            if (selectedFragment::class.java != supportFragmentManager.findFragmentById(R.id.mainView)?.javaClass) {
+                replaceFragment(selectedFragment)
             }
-            if(it.itemId == R.id.nav_info){
-                replaceFragment(InfoFragment())
-            }
-            if(it.itemId == R.id.nav_web){
-                replaceFragment(WebFragment())
-            }
+
             true
         }
         // Add long click listener to Bottom Navigation View items
@@ -114,6 +115,10 @@ class MainActivity : AppCompatActivity() {
             "info" -> {
                 binding.btmNavBar.selectedItemId = R.id.nav_info
                 replaceFragment(InfoFragment())
+            }
+            "web" -> {
+                binding.btmNavBar.selectedItemId = R.id.nav_web
+                replaceFragment(WebFragment())
             }else -> {
                 binding.btmNavBar.selectedItemId = R.id.nav_home
                 replaceFragment(HomeFragment())

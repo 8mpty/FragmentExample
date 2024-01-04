@@ -10,18 +10,19 @@
         <item>reply_all</item>
     </string-array>
 
-    <!-- Reply Preference -->
     <!-- Entry Titles -->
     <string-array name="main_entries">
         <item>Home</item>
         <item>Accounts</item>
         <item>Info</item>
+        <item>Web</item>
     </string-array>
 
     <!-- Entry Values -->
     <string-array name="main_values">
         <item>home</item>
         <item>accounts</item>
-        <item>info</item>
+        <item>Info</item>
+        <item>web</item>
     </string-array>
 </resources>
